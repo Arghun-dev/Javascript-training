@@ -65,3 +65,78 @@ try {
   logMyErrors(e);
 }
 ```
+
+**Oh, wait! What does throw — new Error — means?**
+
+```js
+try {
+  throw new Error('new error'); // code
+} catch (err) {
+  console.log(err.message); // error handling
+}
+```
+
+Well, as we have seen before, when there is an error in the code, the code stops running. When using the throw statement, we can control the flow and customize our own error and the error message by throwing an error or an exception. You can customize it as a string, object, boolean, or as a number.
+
+**Finally, the final statement**
+
+We execute finally despite the try… catch. This block is always executed after try… catch. This block will be executed either way: if there is or not an exception. Finally always makes sure that the code will be executed, even if there is an error.
+
+```js
+try {
+ // Block of code to try
+} catch(err) {
+ // Block of code to handle errors
+} finally {
+ // Block of code to be executed regardless of the try / catch result
+}
+```
+
+If finally returns a value, this value will be the return value in the whole Try… Catch… Finally block, and it doesn’t matter what’s the return value in the Try… Catch block.
+
+```js
+function f() {
+  try {
+    console.log(0);
+    throw 'bogus';
+  } catch (e) {
+    console.log(1);
+    return true; // the return is not executed until it finally is completed
+    console.log(2);
+  } finally {
+    console.log(3);
+    return false; // overwrite the previous return
+    console.log(4);
+  }
+  // 'return false' is executed
+  console.log(5);
+}
+console.log(f()); // 0, 1, 3, false
+```
+
+**Nested Try… Catch blocks**
+
+It’s possible to nested Try… Catch. If try doesn’t have its own catch it must have a finally block and the catch block attached to the try… catch is tested in order make a coincidence. Here’s an example of the structure and how it works.
+
+```js
+try {
+  try {
+    throw new Error('oops');
+  } catch (ex) {
+    console.error('inner',ex.message);
+    throw ex;
+  } finally {
+    console.log('finally');
+  }
+} catch(ex) {
+  console.error('outer', ex.message);
+}
+```
+
+The exception will be captured by the closest catch. Any new exception in the internal block will be captured by the external block.
+
+### Conclusion
+
+The Try… Catch block handles runtime errors. It means that if you try to run the first block of code, the second block catches the errors which occur in it.
+
+Error object has these two properties: Name and Message
